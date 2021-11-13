@@ -1,6 +1,19 @@
-import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Text, TouchableOpacity, View, Dimensions } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import {
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from 'react-native';
+
+import { useTraining } from '../../hooks/useTraining';
+import {
+  AssembleNewTrainingButton,
+  FrequencyAndWeightWrapper,
+  TrainingTypeContainer,
+} from './styles';
 
 type TrainingType = {
   type: 'A' | 'B';
@@ -13,38 +26,16 @@ export function TrainingList({
 }: TrainingType): JSX.Element {
   const { height } = Dimensions.get('screen');
 
-  const haveTraining = false; // Pode ficar no localstorage
+  const { trainingList } = useTraining();
 
   return (
     <>
-      {!haveTraining && (
+      {trainingList.length === 0 ? (
         <>
           {type === 'A' && (
-            <View
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flex: 1,
-                height: height,
-                width: '100%',
-              }}
-            >
+            <TrainingTypeContainer>
               <Text>Você ainda não tem nenhum treino 😩</Text>
-              <TouchableOpacity
-                onPress={onAssembleTraining}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexDirection: 'row',
-                  height: 40,
-                  width: 150,
-                  backgroundColor: '#3B82F6',
-                  borderRadius: 5,
-                  marginTop: 20,
-                }}
-              >
+              <AssembleNewTrainingButton onPress={onAssembleTraining}>
                 <Ionicons
                   name="barbell"
                   size={24}
@@ -52,8 +43,8 @@ export function TrainingList({
                   style={{ marginRight: 5 }}
                 />
                 <Text style={{ color: '#fff' }}>Montar treino</Text>
-              </TouchableOpacity>
-            </View>
+              </AssembleNewTrainingButton>
+            </TrainingTypeContainer>
           )}
 
           {type === 'B' && (
@@ -62,6 +53,46 @@ export function TrainingList({
             </TouchableOpacity>
           )}
         </>
+      ) : (
+        <View style={{ flex: 1, width: '100%', marginTop: 40 }}>
+          <FlatList
+            data={trainingList || []}
+            keyExtractor={(item) => item.name}
+            contentContainerStyle={{
+              flex: 1,
+            }}
+            renderItem={({ item }) => (
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Text style={{ fontWeight: '800' }}>{item.name}</Text>
+                  <FrequencyAndWeightWrapper>
+                    <Text>{item.repetitions}x</Text>
+                  </FrequencyAndWeightWrapper>
+                  <FrequencyAndWeightWrapper>
+                    <Text>{item.weight} kg</Text>
+                  </FrequencyAndWeightWrapper>
+                </View>
+
+                <TouchableOpacity>
+                  <Text>Começar</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          />
+        </View>
       )}
     </>
   );

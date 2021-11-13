@@ -5,7 +5,7 @@ type TContainer = {
 };
 
 export const Container = styled.View<TContainer>`
-  height: ${(props) => props.screenHeight && props.screenHeight - 300};
+  height: ${(props) => props.screenHeight && props.screenHeight - 300}px;
   width: 100%;
   background-color: #fff;
   border-radius: 5px;

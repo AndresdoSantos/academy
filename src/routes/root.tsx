@@ -4,37 +4,40 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { TrainingProgram } from '../pages/TrainingProgram';
 import { AssembleTraining } from '../pages/AssembleTraining';
+import { CreatingTrainingProvider } from '../contexts/CreateTrainingContext';
 
 const Stack = createNativeStackNavigator();
 
 export function Root(): JSX.Element {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          contentStyle: {
-            backgroundColor: '#fff',
-            marginTop: 35,
-            padding: 20,
-          },
-        }}
-        initialRouteName="TrainingProgram"
-      >
-        <Stack.Screen
-          name="TrainingProgram"
-          component={TrainingProgram}
-          options={{
-            headerShown: false,
+      <CreatingTrainingProvider>
+        <Stack.Navigator
+          screenOptions={{
+            contentStyle: {
+              backgroundColor: '#fff',
+              marginTop: 35,
+              padding: 15,
+            },
           }}
-        />
-        <Stack.Screen
-          name="AssembleTraining"
-          component={AssembleTraining}
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack.Navigator>
+          initialRouteName="TrainingProgram"
+        >
+          <Stack.Screen
+            name="TrainingProgram"
+            component={TrainingProgram}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="AssembleTraining"
+            component={AssembleTraining}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+      </CreatingTrainingProvider>
     </NavigationContainer>
   );
 }

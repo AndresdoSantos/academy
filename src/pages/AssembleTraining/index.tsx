@@ -9,12 +9,14 @@ import {
   ButtonConfirmTrainingWrapper,
   Container,
   Form,
+  Header,
   Input,
   InputWrapper,
   Label,
   TwoInputs,
 } from './styles';
 import { format } from 'date-fns';
+import { useTraining } from '../../hooks/useTraining';
 
 type Training = { name: string; repetitions: string; weight: string };
 type BasicInformation = {
@@ -27,8 +29,8 @@ type BasicInformation = {
 
 export function AssembleTraining(): JSX.Element {
   const { goBack } = useNavigation();
+  const { trainingList, getTraining } = useTraining();
 
-  const [trainingList, setTrainingList] = useState<Training[]>([]);
   const [basicInformation, setBasicInformation] =
     useState<BasicInformation | null>(null);
   const [isBasicInformation, setIsBasicInformation] = useState(true);
@@ -37,14 +39,7 @@ export function AssembleTraining(): JSX.Element {
 
   return (
     <Container>
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
+      <Header>
         <BackButtonWrapper onPress={() => goBack()}>
           <Ionicons
             name="arrow-back"
@@ -62,7 +57,7 @@ export function AssembleTraining(): JSX.Element {
             Treino {trainingList.length + 1}
           </Text>
         )}
-      </View>
+      </Header>
 
       {isBasicInformation && (
         <Formik
@@ -155,9 +150,7 @@ export function AssembleTraining(): JSX.Element {
       {!isBasicInformation && (
         <Formik
           initialValues={{ name: '', repetitions: '', weight: '' }}
-          onSubmit={(values) => {
-            setTrainingList([...trainingList, values]);
-          }}
+          onSubmit={(values) => getTraining(values)}
         >
           {({ handleChange, handleBlur, handleSubmit, values, resetForm }) => (
             <Form>
@@ -196,11 +189,7 @@ export function AssembleTraining(): JSX.Element {
               <TwoInputs>
                 <ButtonConfirmTrainingWrapper
                   isTwoButtons={trainingList.length > 0}
-                  onPress={() => {
-                    handleSubmit();
-
-                    resetForm();
-                  }}
+                  onPress={() => handleSubmit()}
                 >
                   <MaterialCommunityIcons
                     name="arm-flex"
@@ -212,7 +201,11 @@ export function AssembleTraining(): JSX.Element {
                 </ButtonConfirmTrainingWrapper>
 
                 {trainingList.length > 0 && (
-                  <ButtonConfirmTrainingWrapper confirm isTwoButtons>
+                  <ButtonConfirmTrainingWrapper
+                    confirm
+                    isTwoButtons
+                    onPress={() => goBack()}
+                  >
                     <Ionicons
                       name="alarm-sharp"
                       size={24}
