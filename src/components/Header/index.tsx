@@ -17,8 +17,11 @@ import {
 } from './styles';
 
 import profileImg from '../../../assets/people.jpeg';
+import { useNavigation } from '@react-navigation/core';
 
 export function Header(): JSX.Element {
+  const { navigate } = useNavigation();
+
   const offset = useSharedValue(80);
 
   const animatedStyles = useAnimatedStyle(() => {
@@ -63,8 +66,8 @@ export function Header(): JSX.Element {
 
         {isAnimated && (
           <Animated.View style={animatedProfileButton}>
-            <ButtonProfile>
-              <ButtonProfileText>Perfil</ButtonProfileText>
+            <ButtonProfile onPress={() => navigate('Profile')}>
+              <ButtonProfileText>Profile</ButtonProfileText>
             </ButtonProfile>
           </Animated.View>
         )}
@@ -75,6 +78,7 @@ export function Header(): JSX.Element {
         </AnimatedHeaderWrapper>
 
         <ProfileWrapper
+          activeOpacity={0.8}
           onPress={() => {
             setIsAnimated(!isAnimated);
 

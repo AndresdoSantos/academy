@@ -1,13 +1,14 @@
 import React from 'react';
-import { TouchableOpacity, Text, View, Dimensions } from 'react-native';
+import { TouchableOpacity, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+
 import { Container, HeaderTitle, HeaderWrapper } from './styles';
 
-type TMenu = {
+type MenuProps = {
   onClose(): void;
 };
 
-export function Menu({ onClose }: TMenu): JSX.Element {
+export function Menu({ onClose }: MenuProps): JSX.Element {
   const { height } = Dimensions.get('screen');
 
   return (

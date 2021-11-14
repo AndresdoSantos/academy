@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   height: 100px;
-  margin: 20px 0;
+  padding: 0 15px;
 `;
 
 type TButtonDay = { today?: boolean };

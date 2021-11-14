@@ -6,6 +6,7 @@ export const Container = styled.View`
   align-items: center;
   justify-content: space-between;
   position: relative;
+  padding: 15px;
 `;
 
 export const WelcomeMessageWrapper = styled.View``;

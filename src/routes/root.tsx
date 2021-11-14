@@ -2,9 +2,12 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { TrainingProgram } from '../pages/TrainingProgram';
-import { AssembleTraining } from '../pages/AssembleTraining';
 import { CreatingTrainingProvider } from '../contexts/CreateTrainingContext';
+
+import { TrainingProgram } from '../pages/TrainingProgram';
+import { Profile } from '../pages/Profile';
+import { Goal } from '../pages/Profile/Goals';
+import { Body } from '../pages/Profile/Body';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +20,6 @@ export function Root(): JSX.Element {
             contentStyle: {
               backgroundColor: '#fff',
               marginTop: 35,
-              padding: 15,
             },
           }}
           initialRouteName="TrainingProgram"
@@ -30,8 +32,22 @@ export function Root(): JSX.Element {
             }}
           />
           <Stack.Screen
-            name="AssembleTraining"
-            component={AssembleTraining}
+            name="Profile"
+            component={Profile}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Goal"
+            component={Goal}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Body"
+            component={Body}
             options={{
               headerShown: false,
             }}

@@ -1,34 +1,35 @@
 import styled from 'styled-components/native';
 
-export const FrequencyAndWeightWrapper = styled.View`
-  background-color: #e5e7eb;
-  margin: 0 5px;
-  border: 1px solid #374151;
-  border-radius: 15px;
-  height: 40px;
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const AssembleNewTrainingButton = styled.TouchableOpacity`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  height: 40px;
-  width: 150px;
-  background-color: #3b82f6;
+export const CardContainer = styled.View`
+  height: 70px;
   border-radius: 5px;
-  margin-top: 20px;
+  padding: 15px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
-export const TrainingTypeContainer = styled.View`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  height: height;
-  width: 100%;
+export const CardTitle = styled.Text`
+  font-weight: 700;
+  font-size: 15px;
+  color: #374151;
+`;
+
+export const CardSubtitle = styled.Text`
+  font-size: 12px;
+`;
+
+export const TimeWrapper = styled.View`
+  background-color: #e5e7eb;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 2px 4px;
+  border-radius: 5px;
+`;
+
+export const TimeText = styled.Text`
+  font-size: 11px;
+  font-weight: bold;
 `;

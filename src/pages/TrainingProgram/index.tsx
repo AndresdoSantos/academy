@@ -1,41 +1,34 @@
 import React, { useCallback, useState } from 'react';
-import {
-  Dimensions,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/core';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import { Ionicons } from '@expo/vector-icons';
+import { format } from 'date-fns';
+import usBrLocale from 'date-fns/locale/en-US';
 
 import { Menu } from '../../components/Menu';
 import { Header } from '../../components/Header';
 import { Days } from '../../components/Days';
-import { TrainingOptions } from '../../components/TrainingOptions';
 
-import { Container } from './styles';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from 'react-native-reanimated';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { ButtonStartTraining } from '../../components/ButtonStartTraining';
+import { TrainingList } from '../../components/TrainingList';
+
+import {
+  Container,
+  TrainingProgramHeaderOptionDateWrapper,
+  TrainingProgramHeaderOptions,
+  TrainingProgramHeaderTitle,
+  TrainingProgramHeaderWrapper,
+} from './styles';
 
 export function TrainingProgram(): JSX.Element {
-  const offset = useSharedValue(-20);
-
-  const animatedStyles = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateX: withSpring(offset.value * 10),
-        },
-      ],
-    };
-  });
-
   const { navigate } = useNavigation();
 
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -44,6 +37,8 @@ export function TrainingProgram(): JSX.Element {
     (): void => setMenuIsOpen(!menuIsOpen),
     [menuIsOpen]
   );
+
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <>
@@ -58,99 +53,57 @@ export function TrainingProgram(): JSX.Element {
       </Modal>
 
       <Container>
-        <Header />
+        {!isExpanded && (
+          <View style={{ height: 220 }}>
+            <Header />
 
-        <Days />
-
-        <Text style={{ fontWeight: 'bold', fontSize: 25, marginBottom: 15 }}>
-          Today
-        </Text>
-
-        <ScrollView>
-          <View
-            style={{
-              height: 70,
-              borderRadius: 5,
-              backgroundColor: '#F9FAFB',
-              padding: 15,
-              position: 'relative',
-              marginBottom: 15,
-            }}
-          >
-            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
-              Cadeira abdutora
-            </Text>
-            <Text>Músculos externos da perna</Text>
-
-            <View
-              style={{
-                backgroundColor: '#E5E7EB',
-                position: 'absolute',
-                top: 15,
-                right: 15,
-                paddingHorizontal: 4,
-                paddingVertical: 2,
-                borderRadius: 5,
-              }}
-            >
-              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>
-                11 AM - 11:05 AM
-              </Text>
-            </View>
+            <Days />
           </View>
-          <View
-            style={{
-              height: 70,
-              borderRadius: 5,
-              backgroundColor: '#F9FAFB',
-              padding: 15,
-              position: 'relative',
-            }}
-          >
-            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
-              Cadeira extensora
-            </Text>
-            <Text>Músculos externos da perna</Text>
+        )}
 
-            <View
-              style={{
-                backgroundColor: '#E5E7EB',
-                position: 'absolute',
-                top: 15,
-                right: 15,
-                paddingHorizontal: 4,
-                paddingVertical: 2,
-                borderRadius: 5,
-              }}
-            >
-              <Text style={{ fontSize: 11, fontWeight: 'bold' }}>
-                11 AM - 11:05 AM
-              </Text>
-            </View>
-          </View>
-        </ScrollView>
-
-        <TouchableOpacity
+        <View
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'row',
-            backgroundColor: '#5bd2bb',
-            borderRadius: 10,
-            height: 50,
+            flex: 1,
+            paddingHorizontal: isExpanded ? 0 : 15,
           }}
         >
-          <MaterialCommunityIcons
-            name="clock-time-three"
-            size={24}
-            color="#fff"
-            style={{ marginRight: 10 }}
-          />
-          <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#fff' }}>
-            Começar treino
-          </Text>
-        </TouchableOpacity>
+          <TrainingProgramHeaderWrapper
+            style={{ paddingHorizontal: isExpanded ? 15 : 0 }}
+          >
+            <TrainingProgramHeaderTitle>
+              Training program
+            </TrainingProgramHeaderTitle>
+
+            <TrainingProgramHeaderOptions>
+              {isExpanded ? (
+                <TouchableOpacity onPress={() => setIsExpanded(false)}>
+                  <Ionicons name="close" size={20} color="#c53030" />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity onPress={() => setIsExpanded(true)}>
+                  <Ionicons name="expand-sharp" size={20} color="#6B7280" />
+                </TouchableOpacity>
+              )}
+
+              <TrainingProgramHeaderOptionDateWrapper>
+                <Text style={{ fontSize: 13 }}>
+                  {format(new Date(), `MMMM',' dd yyyy`, {
+                    locale: usBrLocale,
+                  })}
+                </Text>
+              </TrainingProgramHeaderOptionDateWrapper>
+            </TrainingProgramHeaderOptions>
+          </TrainingProgramHeaderWrapper>
+
+          {isExpanded && (
+            <View
+              style={{ height: 1, width: '100%', backgroundColor: '#6B7280' }}
+            />
+          )}
+
+          <TrainingList isExpanded={isExpanded} />
+        </View>
+        <ButtonStartTraining />
       </Container>
     </>
   );
