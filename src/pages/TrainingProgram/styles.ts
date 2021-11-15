@@ -12,6 +12,7 @@ export const TrainingProgramHeaderWrapper = styled.View`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
+  margin-top: 50px;
 `;
 
 export const TrainingProgramHeaderTitle = styled.Text`
@@ -35,6 +36,5 @@ export const TrainingProgramHeaderOptionDateWrapper = styled.View`
   border: 1px solid #6b7280;
   border-radius: 20px;
   height: 30px;
-  width: 130px;
   padding: 0 10px;
 `;

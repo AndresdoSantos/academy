@@ -75,7 +75,7 @@ export const ProfileOptionLeftContent = styled.View`
 `;
 
 type ProfileOptionIconLeftWrapperProps = {
-  item: 'Goals' | 'My Body' | 'Settings';
+  item: 'Metas' | 'Meu Corpo' | 'Configurações';
 };
 
 export const ProfileOptionIconLeftWrapper = styled.View<ProfileOptionIconLeftWrapperProps>`
@@ -83,9 +83,9 @@ export const ProfileOptionIconLeftWrapper = styled.View<ProfileOptionIconLeftWra
   height: 60px;
   border-radius: 60px;
   background-color: ${(props) =>
-    props.item === 'Goals'
+    props.item === 'Metas'
       ? '#fff0e5'
-      : props.item === 'My Body'
+      : props.item === 'Meu Corpo'
       ? '#ECEAFF'
       : '#E4F7FF'};
   display: flex;

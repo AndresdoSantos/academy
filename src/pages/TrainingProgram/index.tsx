@@ -1,22 +1,15 @@
 import React, { useCallback, useState } from 'react';
-import { Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/core';
-import Animated, {
-  Easing,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
 import { format } from 'date-fns';
-import usBrLocale from 'date-fns/locale/en-US';
+import ptBrLocale from 'date-fns/locale/pt-BR';
 
 import { Menu } from '../../components/Menu';
 import { Header } from '../../components/Header';
 import { Days } from '../../components/Days';
-
 import { ButtonStartTraining } from '../../components/ButtonStartTraining';
 import { TrainingList } from '../../components/TrainingList';
 
@@ -71,7 +64,7 @@ export function TrainingProgram(): JSX.Element {
             style={{ paddingHorizontal: isExpanded ? 15 : 0 }}
           >
             <TrainingProgramHeaderTitle>
-              Training program
+              Programa de treino
             </TrainingProgramHeaderTitle>
 
             <TrainingProgramHeaderOptions>
@@ -87,8 +80,8 @@ export function TrainingProgram(): JSX.Element {
 
               <TrainingProgramHeaderOptionDateWrapper>
                 <Text style={{ fontSize: 13 }}>
-                  {format(new Date(), `MMMM',' dd yyyy`, {
-                    locale: usBrLocale,
+                  {format(new Date(), `dd 'de' MMMM 'de' yyyy`, {
+                    locale: ptBrLocale,
                   })}
                 </Text>
               </TrainingProgramHeaderOptionDateWrapper>
@@ -103,7 +96,13 @@ export function TrainingProgram(): JSX.Element {
 
           <TrainingList isExpanded={isExpanded} />
         </View>
-        <ButtonStartTraining />
+        <ButtonStartTraining
+          onPress={() =>
+            navigate('TrainingStarted', {
+              name: 'Cadeira extensora',
+            })
+          }
+        />
       </Container>
     </>
   );

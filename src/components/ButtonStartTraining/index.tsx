@@ -11,11 +11,11 @@ export function ButtonStartTraining({ ...props }: IButtonProps): JSX.Element {
     <Container {...props}>
       <MaterialCommunityIcons
         name="clock-time-three"
-        size={24}
+        size={18}
         color="#fff"
         style={{ marginRight: 10 }}
       />
-      <Title>start training</Title>
+      <Title>começar treino</Title>
     </Container>
   );
 }

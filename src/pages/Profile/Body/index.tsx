@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react';
-import { FlatList, Text, TouchableOpacity } from 'react-native';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { Ionicons } from '@expo/vector-icons';
 
 import {
-  BodyBasicSectionItem,
+  BodyBasicOtherAcademyServicesWrapper,
+  BodyBasicSectionItemContent,
+  BodyBasicSectionItemWrapper,
   BodyContainer,
   BodyHeaderWrapper,
   BodySubtitle,
@@ -12,12 +14,12 @@ import {
   BodyTitle,
 } from './styles';
 
-type BodyBasic = 'weight' | 'height';
+type BodyBasic = 'peso' | 'altura';
 
 export function Body(): JSX.Element {
   const { goBack } = useNavigation();
 
-  const basics = useMemo((): BodyBasic[] => ['weight', 'height'], []);
+  const basics = useMemo((): BodyBasic[] => ['peso', 'altura'], []);
 
   return (
     <BodyContainer>
@@ -27,10 +29,10 @@ export function Body(): JSX.Element {
         </TouchableOpacity>
       </BodyHeaderWrapper>
 
-      <BodyTitle>My Body</BodyTitle>
+      <BodyTitle>Meu Corpo</BodyTitle>
 
       <BodySubtitleWrapper>
-        <BodySubtitle>Basics</BodySubtitle>
+        <BodySubtitle>Básico</BodySubtitle>
       </BodySubtitleWrapper>
 
       <FlatList
@@ -41,16 +43,40 @@ export function Body(): JSX.Element {
         }}
         keyExtractor={(item) => item}
         renderItem={({ item }) => (
-          <BodyBasicSectionItem item={item}>
-            <Text style={{ fontSize: 30, color: '#fff' }}>
-              {item === 'weight' ? '72kg' : '175cm'}
+          <BodyBasicSectionItemWrapper item={item}>
+            {item === 'peso' ? (
+              <BodyBasicSectionItemContent>
+                <Text
+                  style={{ fontSize: 35, fontWeight: 'bold', color: '#fff' }}
+                >
+                  72
+                </Text>
+                <Text style={{ marginBottom: 5, color: '#fff' }}>kg</Text>
+              </BodyBasicSectionItemContent>
+            ) : (
+              <BodyBasicSectionItemContent>
+                <Text
+                  style={{ fontSize: 35, fontWeight: 'bold', color: '#fff' }}
+                >
+                  175
+                </Text>
+                <Text style={{ marginBottom: 5, color: '#fff' }}>cm</Text>
+              </BodyBasicSectionItemContent>
+            )}
+            <Text style={{ marginTop: 10, fontSize: 15, color: '#fff' }}>
+              {item === 'peso' ? 'peso' : 'altura'}
             </Text>
-            <Text style={{ fontSize: 20, color: '#fff' }}>
-              {item === 'weight' ? 'Weight' : 'Height'}
-            </Text>
-          </BodyBasicSectionItem>
+          </BodyBasicSectionItemWrapper>
         )}
       />
+      <BodyBasicOtherAcademyServicesWrapper>
+        <Text style={{ fontSize: 35, fontWeight: 'bold', color: '#fff' }}>
+          Krav Maga, dança...
+        </Text>
+        <Text style={{ marginTop: 10, color: '#fff' }}>
+          Outros serviços da academia
+        </Text>
+      </BodyBasicOtherAcademyServicesWrapper>
     </BodyContainer>
   );
 }

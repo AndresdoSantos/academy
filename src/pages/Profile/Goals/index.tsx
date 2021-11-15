@@ -25,10 +25,10 @@ export function Goal(): JSX.Element {
         </TouchableOpacity>
       </GoalHeaderWrapper>
 
-      <GoalTitle>Goals</GoalTitle>
+      <GoalTitle>Metas</GoalTitle>
 
       <GoalTabWrapper>
-        <GoalTabTitle>Gain weight</GoalTabTitle>
+        <GoalTabTitle>Ganhar massa magra</GoalTabTitle>
       </GoalTabWrapper>
 
       <GoalSectionWrapper>
@@ -39,7 +39,7 @@ export function Goal(): JSX.Element {
               kg
             </Text>
           </GoalSectionLeftTextWrapper>
-          <Text style={{ color: '#9CA3AF' }}>Current</Text>
+          <Text style={{ color: '#9CA3AF' }}>Atual</Text>
         </GoalSectionLeft>
 
         <Ionicons name="arrow-forward" size={20} color="#9CA3AF" />
@@ -51,7 +51,35 @@ export function Goal(): JSX.Element {
               kg
             </Text>
           </GoalSectionLeftTextWrapper>
-          <Text style={{ color: '#9CA3AF' }}>Goal</Text>
+          <Text style={{ color: '#9CA3AF' }}>Objetivo</Text>
+        </GoalSectionRight>
+      </GoalSectionWrapper>
+
+      <GoalTabWrapper>
+        <GoalTabTitle>Perder peso</GoalTabTitle>
+      </GoalTabWrapper>
+
+      <GoalSectionWrapper>
+        <GoalSectionLeft>
+          <GoalSectionLeftTextWrapper>
+            <Text style={{ fontSize: 40, color: '#374151' }}>20</Text>
+            <Text style={{ fontSize: 16, marginBottom: 5, color: '#374151' }}>
+              %
+            </Text>
+          </GoalSectionLeftTextWrapper>
+          <Text style={{ color: '#9CA3AF' }}>Atual</Text>
+        </GoalSectionLeft>
+
+        <Ionicons name="arrow-forward" size={20} color="#9CA3AF" />
+
+        <GoalSectionRight>
+          <GoalSectionLeftTextWrapper>
+            <Text style={{ fontSize: 40, color: '#374151' }}>5</Text>
+            <Text style={{ fontSize: 16, marginBottom: 5, color: '#374151' }}>
+              %
+            </Text>
+          </GoalSectionLeftTextWrapper>
+          <Text style={{ color: '#9CA3AF' }}>Objetivo</Text>
         </GoalSectionRight>
       </GoalSectionWrapper>
     </GoalContainer>

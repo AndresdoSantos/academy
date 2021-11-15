@@ -27,13 +27,13 @@ import {
 import profileImg from '../../../assets/people.jpeg';
 import { useNavigation } from '@react-navigation/core';
 
-type Options = 'Goals' | 'My Body' | 'Settings';
+type Options = 'Metas' | 'Meu Corpo' | 'Configurações';
 
 export function Profile(): JSX.Element {
   const { goBack, navigate } = useNavigation();
 
   const options = useMemo(
-    (): Options[] => ['Goals', 'My Body', 'Settings'],
+    (): Options[] => ['Metas', 'Meu Corpo', 'Configurações'],
     []
   );
 
@@ -57,8 +57,10 @@ export function Profile(): JSX.Element {
         <ProfileJoinedWrapper>
           <ProfileJoinedLine />
           <View>
-            <Text style={{ color: '#9CA3AF', fontSize: 13 }}>Joined</Text>
-            <Text style={{ fontWeight: '700', fontSize: 16 }}>6 mon ago</Text>
+            <Text style={{ color: '#9CA3AF', fontSize: 13 }}>Ingressou à</Text>
+            <Text style={{ fontWeight: '700', fontSize: 16 }}>
+              6 meses atrás
+            </Text>
           </View>
         </ProfileJoinedWrapper>
       </ProfileImageAndJoinedWrapper>
@@ -80,15 +82,17 @@ export function Profile(): JSX.Element {
             <ProfileOptionWrapper>
               <ProfileOptionLeftContent>
                 <ProfileOptionIconLeftWrapper item={item}>
-                  {item === 'Goals' && (
+                  {item === 'Metas' && (
                     <Feather name="target" size={24} color="#fe6b01" />
                   )}
 
-                  {item !== 'Goals' && (
+                  {item !== 'Metas' && (
                     <Ionicons
-                      name={item === 'My Body' ? 'ios-body' : 'settings-sharp'}
+                      name={
+                        item === 'Meu Corpo' ? 'ios-body' : 'settings-sharp'
+                      }
                       size={24}
-                      color={item === 'My Body' ? '#551DFE' : '#04A2EE'}
+                      color={item === 'Meu Corpo' ? '#551DFE' : '#04A2EE'}
                     />
                   )}
                 </ProfileOptionIconLeftWrapper>
@@ -97,9 +101,11 @@ export function Profile(): JSX.Element {
 
               <ProfileOptionIconRightWrapper
                 onPress={() => {
-                  if (item === 'Goals') navigate('Goal');
+                  if (item === 'Metas') navigate('Goal');
 
-                  if (item === 'My Body') navigate('Body');
+                  if (item === 'Meu Corpo') navigate('Body');
+
+                  if (item === 'Configurações') navigate('Settings');
                 }}
               >
                 <Ionicons name="chevron-forward" size={20} color="#4b5563" />
@@ -111,7 +117,7 @@ export function Profile(): JSX.Element {
 
       <SignOutButtonWrapper>
         <Octicons name="sign-in" size={24} color="#FB5278" />
-        <Text style={{ fontWeight: '700', color: '#4B5563' }}>Sign Out</Text>
+        <Text style={{ fontWeight: '700', color: '#4B5563' }}>Sair</Text>
       </SignOutButtonWrapper>
     </ProfileContainer>
   );

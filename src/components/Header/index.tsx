@@ -57,7 +57,7 @@ export function Header(): JSX.Element {
       <Container>
         {!isAnimated && (
           <WelcomeMessageWrapper>
-            <Text style={{ fontSize: 15 }}>Welcome back,</Text>
+            <Text style={{ fontSize: 15 }}>Bem-vindo de volta,</Text>
             <Text style={{ fontSize: 30, fontWeight: 'bold' }}>
               Andres dos Santos
             </Text>
@@ -67,14 +67,14 @@ export function Header(): JSX.Element {
         {isAnimated && (
           <Animated.View style={animatedProfileButton}>
             <ButtonProfile onPress={() => navigate('Profile')}>
-              <ButtonProfileText>Profile</ButtonProfileText>
+              <ButtonProfileText>Perfil</ButtonProfileText>
             </ButtonProfile>
           </Animated.View>
         )}
 
         <AnimatedHeaderWrapper as={Animated.View} style={animatedStyles}>
-          <Text style={{ fontWeight: '700' }}>Data de troca: </Text>
-          <Text>Dia 11 de novembro de 2021</Text>
+          <Text style={{ fontWeight: '700' }}>Você troca de treino em</Text>
+          <Text>11 de novembro de 2021</Text>
         </AnimatedHeaderWrapper>
 
         <ProfileWrapper
