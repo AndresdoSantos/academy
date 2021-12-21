@@ -27,9 +27,10 @@ export const ProfileWrapper = styled.TouchableOpacity`
 export const AnimatedHeaderWrapper = styled.View`
   width: 100%;
   height: 80px;
-  background-color: #f2f2f2;
-  border-radius: 15px;
-  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ButtonProfile = styled.TouchableOpacity`

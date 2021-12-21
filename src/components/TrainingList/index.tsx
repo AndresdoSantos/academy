@@ -1,25 +1,37 @@
-import React from 'react';
-import { FlatList, Text, View, Dimensions, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import {
+  FlatList,
+  Text,
+  View,
+  Dimensions,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
+import ptBrLocale from 'date-fns/locale/pt-BR';
 
 import { useTraining } from '../../hooks/useTraining';
 import {
   CardContainer,
   CardSubtitle,
   CardTitle,
+  DotConclude,
   TimeText,
   TimeWrapper,
+  TrainingProgramHeaderOptionDateWrapper,
+  TrainingProgramHeaderOptions,
+  TrainingProgramHeaderTitle,
+  TrainingProgramHeaderWrapper,
 } from './styles';
+import { TrainingData } from '../../contexts/TrainingContext';
+import { Ionicons } from '@expo/vector-icons';
+import { format } from 'date-fns';
 
-type TrainingListProps = {
-  isExpanded: boolean;
-};
-
-export function TrainingList({ isExpanded }: TrainingListProps): JSX.Element {
+export function TrainingList(): JSX.Element {
   const { width } = Dimensions.get('screen');
 
-  const { trainingList } = useTraining();
+  const { handleSelectTraining } = useTraining();
 
-  const trainings = [
+  const trainings: TrainingData[] = [
     {
       id: 0,
       name: 'Cadeira extensora',
@@ -106,55 +118,84 @@ export function TrainingList({ isExpanded }: TrainingListProps): JSX.Element {
     },
   ];
 
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
-    <>
+    <View style={{ padding: 15 }}>
+      <TrainingProgramHeaderWrapper isExpanded={isExpanded}>
+        <TrainingProgramHeaderTitle>
+          Programa de treino
+        </TrainingProgramHeaderTitle>
+
+        <TrainingProgramHeaderOptions>
+          {isExpanded ? (
+            <TouchableOpacity onPress={() => setIsExpanded(false)}>
+              <Ionicons name="close" size={20} color="#c53030" />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={() => setIsExpanded(true)}>
+              <Ionicons name="expand-sharp" size={20} color="#6B7280" />
+            </TouchableOpacity>
+          )}
+
+          <TrainingProgramHeaderOptionDateWrapper>
+            <Text style={{ fontSize: 13 }}>
+              {format(new Date(), `dd 'de' MMMM 'de' yyyy`, {
+                locale: ptBrLocale,
+              })}
+            </Text>
+          </TrainingProgramHeaderOptionDateWrapper>
+        </TrainingProgramHeaderOptions>
+      </TrainingProgramHeaderWrapper>
+
+      {isExpanded && (
+        <View
+          style={{
+            height: 1,
+            width: '100%',
+            backgroundColor: '#6B7280',
+          }}
+        />
+      )}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         pagingEnabled
       >
-        <View
-          style={{
-            flex: 1,
-            marginBottom: 50,
-            width: isExpanded ? width : width - 30,
-            backgroundColor: '#fff',
-          }}
-        >
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            data={trainings}
-            keyExtractor={(item) => String(item.id)}
-            renderItem={({ item }) => (
-              <CardContainer>
-                <View
-                  style={{
-                    height: 10,
-                    width: 10,
-                    borderWidth: 1,
-                    marginRight: 15,
-                    borderRadius: 10,
-                    backgroundColor: item.isConcluded ? '#5bd2bb' : '#fff',
-                  }}
-                />
+        <>
+          <View
+            style={{
+              flex: 1,
+              width: isExpanded ? width : width - 30,
+              backgroundColor: '#fff',
+            }}
+          >
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={trainings}
+              keyExtractor={(item) => String(item.id)}
+              renderItem={({ item }) => (
+                <CardContainer onPress={() => handleSelectTraining(item)}>
+                  <DotConclude isConcluded={item.isConcluded} />
 
-                <View style={{ flex: 1 }}>
-                  <CardTitle>{item.name}</CardTitle>
-                  <CardSubtitle>{item.wereDoYouExercise}</CardSubtitle>
-                </View>
+                  <View style={{ flex: 1 }}>
+                    <CardTitle>{item.name}</CardTitle>
+                    <CardSubtitle>{item.wereDoYouExercise}</CardSubtitle>
+                  </View>
 
-                <TimeWrapper>
-                  <TimeText>{item.time}</TimeText>
-                </TimeWrapper>
-              </CardContainer>
-            )}
-          />
-        </View>
+                  <TimeWrapper>
+                    <TimeText>{item.time}</TimeText>
+                  </TimeWrapper>
+                </CardContainer>
+              )}
+            />
+          </View>
 
-        <View style={{ flex: 1, width: width, backgroundColor: '#fff' }}>
-          <Text>Andres</Text>
-        </View>
+          <View style={{ flex: 1, width: width, backgroundColor: '#fff' }}>
+            <Text>Andres</Text>
+          </View>
+        </>
       </ScrollView>
-    </>
+    </View>
   );
 }

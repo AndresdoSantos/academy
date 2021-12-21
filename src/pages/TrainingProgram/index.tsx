@@ -1,28 +1,20 @@
 import React, { useCallback, useState } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import Modal from 'react-native-modal';
 import { StatusBar } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/core';
-import { Ionicons } from '@expo/vector-icons';
-import { format } from 'date-fns';
-import ptBrLocale from 'date-fns/locale/pt-BR';
 
 import { Menu } from '../../components/Menu';
 import { Header } from '../../components/Header';
 import { Days } from '../../components/Days';
-import { ButtonStartTraining } from '../../components/ButtonStartTraining';
 import { TrainingList } from '../../components/TrainingList';
 
-import {
-  Container,
-  TrainingProgramHeaderOptionDateWrapper,
-  TrainingProgramHeaderOptions,
-  TrainingProgramHeaderTitle,
-  TrainingProgramHeaderWrapper,
-} from './styles';
+import { Container } from './styles';
+import { TrainingSelected } from '../../components/TrainingSelected';
+import { useTraining } from '../../hooks/useTraining';
 
 export function TrainingProgram(): JSX.Element {
-  const { navigate } = useNavigation();
+  const { actualInformationOfTheTrainingSelected: training } = useTraining();
 
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
@@ -30,8 +22,6 @@ export function TrainingProgram(): JSX.Element {
     (): void => setMenuIsOpen(!menuIsOpen),
     [menuIsOpen]
   );
-
-  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <>
@@ -46,63 +36,17 @@ export function TrainingProgram(): JSX.Element {
       </Modal>
 
       <Container>
-        {!isExpanded && (
-          <View style={{ height: 220 }}>
+        {typeof training !== 'undefined' ? (
+          <TrainingSelected />
+        ) : (
+          <>
             <Header />
 
-            <Days />
-          </View>
+            {/**<Days /> */}
+
+            {/**<TrainingList /> */}
+          </>
         )}
-
-        <View
-          style={{
-            flex: 1,
-            paddingHorizontal: isExpanded ? 0 : 15,
-          }}
-        >
-          <TrainingProgramHeaderWrapper
-            style={{ paddingHorizontal: isExpanded ? 15 : 0 }}
-          >
-            <TrainingProgramHeaderTitle>
-              Programa de treino
-            </TrainingProgramHeaderTitle>
-
-            <TrainingProgramHeaderOptions>
-              {isExpanded ? (
-                <TouchableOpacity onPress={() => setIsExpanded(false)}>
-                  <Ionicons name="close" size={20} color="#c53030" />
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity onPress={() => setIsExpanded(true)}>
-                  <Ionicons name="expand-sharp" size={20} color="#6B7280" />
-                </TouchableOpacity>
-              )}
-
-              <TrainingProgramHeaderOptionDateWrapper>
-                <Text style={{ fontSize: 13 }}>
-                  {format(new Date(), `dd 'de' MMMM 'de' yyyy`, {
-                    locale: ptBrLocale,
-                  })}
-                </Text>
-              </TrainingProgramHeaderOptionDateWrapper>
-            </TrainingProgramHeaderOptions>
-          </TrainingProgramHeaderWrapper>
-
-          {isExpanded && (
-            <View
-              style={{ height: 1, width: '100%', backgroundColor: '#6B7280' }}
-            />
-          )}
-
-          <TrainingList isExpanded={isExpanded} />
-        </View>
-        <ButtonStartTraining
-          onPress={() =>
-            navigate('TrainingStarted', {
-              name: 'Cadeira extensora',
-            })
-          }
-        />
       </Container>
     </>
   );

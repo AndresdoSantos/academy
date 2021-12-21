@@ -2,22 +2,23 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { CreatingTrainingProvider } from '../contexts/CreateTrainingContext';
+import { TrainingProvider } from '../contexts/TrainingContext';
 
 import { TrainingProgram } from '../pages/TrainingProgram';
 import { Profile } from '../pages/Profile';
 import { Goal } from '../pages/Profile/Goals';
 import { Body } from '../pages/Profile/Body';
 import { Settings } from '../pages/Profile/Settings';
-import { TrainingStarted } from '../pages/TrainingProgram/TrainingStarted';
 import { Payments } from '../pages/Profile/Settings/Payments';
+import { Onboarding } from '../pages/Onboarding';
+import { SignIn } from '../pages/SignIn';
 
 const Stack = createNativeStackNavigator();
 
 export function Root(): JSX.Element {
   return (
     <NavigationContainer>
-      <CreatingTrainingProvider>
+      <TrainingProvider>
         <Stack.Navigator
           screenOptions={{
             contentStyle: {
@@ -25,18 +26,26 @@ export function Root(): JSX.Element {
               marginTop: 35,
             },
           }}
-          initialRouteName="TrainingProgram"
+          initialRouteName="SignIn"
         >
           <Stack.Screen
-            name="TrainingProgram"
-            component={TrainingProgram}
+            name="SignIn"
+            component={SignIn}
+            options={{
+              headerShown: false,
+            }}
+          />
+
+          <Stack.Screen
+            name="Onboarding"
+            component={Onboarding}
             options={{
               headerShown: false,
             }}
           />
           <Stack.Screen
-            name="TrainingStarted"
-            component={TrainingStarted}
+            name="TrainingProgram"
+            component={TrainingProgram}
             options={{
               headerShown: false,
             }}
@@ -77,7 +86,7 @@ export function Root(): JSX.Element {
             }}
           />
         </Stack.Navigator>
-      </CreatingTrainingProvider>
+      </TrainingProvider>
     </NavigationContainer>
   );
 }

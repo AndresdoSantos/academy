@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -22,13 +22,13 @@ import { useNavigation } from '@react-navigation/core';
 export function Header(): JSX.Element {
   const { navigate } = useNavigation();
 
-  const offset = useSharedValue(80);
+  const offset = useSharedValue(300);
 
   const animatedStyles = useAnimatedStyle(() => {
     return {
       transform: [
         {
-          translateX: withSpring(offset.value * 4, {
+          translateX: withSpring(offset.value, {
             damping: 500,
             velocity: 1,
           }),
@@ -58,9 +58,7 @@ export function Header(): JSX.Element {
         {!isAnimated && (
           <WelcomeMessageWrapper>
             <Text style={{ fontSize: 15 }}>Bem-vindo de volta,</Text>
-            <Text style={{ fontSize: 30, fontWeight: 'bold' }}>
-              Andres dos Santos
-            </Text>
+            <Text style={{ fontSize: 30, fontWeight: 'bold' }}>Andres</Text>
           </WelcomeMessageWrapper>
         )}
 
@@ -73,8 +71,33 @@ export function Header(): JSX.Element {
         )}
 
         <AnimatedHeaderWrapper as={Animated.View} style={animatedStyles}>
-          <Text style={{ fontWeight: '700' }}>Você troca de treino em</Text>
-          <Text>11 de novembro de 2021</Text>
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#10c805',
+              height: 50,
+              width: 50,
+              borderRadius: 50,
+              marginRight: 20,
+            }}
+          />
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#23b6fc',
+              height: 50,
+              width: 50,
+              borderRadius: 50,
+              marginRight: 20,
+            }}
+          />
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#5420ff',
+              height: 50,
+              width: 50,
+              borderRadius: 50,
+              marginRight: 20,
+            }}
+          />
         </AnimatedHeaderWrapper>
 
         <ProfileWrapper
@@ -82,7 +105,7 @@ export function Header(): JSX.Element {
           onPress={() => {
             setIsAnimated(!isAnimated);
 
-            offset.value = isAnimated ? 50 : 10;
+            offset.value = isAnimated ? 200 : 10;
           }}
         >
           <ImageProfile source={profileImg} />

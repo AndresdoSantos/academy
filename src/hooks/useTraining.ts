@@ -1,25 +1,37 @@
 import { useContextSelector } from 'use-context-selector';
 
 import {
-  CreateTrainingContextData,
-  CreatingTrainingContext,
-} from '../contexts/CreateTrainingContext';
+  TrainingContextData,
+  TrainingContext,
+} from '../contexts/TrainingContext';
 
-type UseTrainingReturn = CreateTrainingContextData;
+type UseTrainingReturn = TrainingContextData;
 
 export function useTraining(): UseTrainingReturn {
   const getTraining = useContextSelector(
-    CreatingTrainingContext,
+    TrainingContext,
     (training) => training.getTraining
   );
 
   const trainingList = useContextSelector(
-    CreatingTrainingContext,
+    TrainingContext,
     (training) => training.trainingList
+  );
+
+  const handleSelectTraining = useContextSelector(
+    TrainingContext,
+    (training) => training.handleSelectTraining
+  );
+
+  const actualInformationOfTheTrainingSelected = useContextSelector(
+    TrainingContext,
+    (training) => training.actualInformationOfTheTrainingSelected
   );
 
   return {
     getTraining,
     trainingList,
+    handleSelectTraining,
+    actualInformationOfTheTrainingSelected,
   };
 }
